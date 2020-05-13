@@ -38,15 +38,19 @@ class DataLogger:
         self.case_limit = 100
         self.count = {p: 0 for p in ps}
         self.data = {p: [] for p in ps}
+        self.sources = {p: [] for p in ps}
         self.data_fname_str = basedir + '/prop_{:.1f}.csv'
 
     def log(self, p, i, pos, payload):
         og = payload[0]
+        source = payload[2]
         if pos and self.count[p] < self.case_limit:
             self.data[p].append(og.hot_list())
+            self.sources[p].append(source)
             self.count[p] = self.count[p] + 1
 
     def finalise(self):
         for p, d in self.data.items():
             df = pd.DataFrame(d)
+            df['source'] = self.sources[p]
             df.to_csv(self.data_fname_str.format(p))
