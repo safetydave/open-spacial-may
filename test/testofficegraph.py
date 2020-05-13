@@ -98,6 +98,13 @@ class TestOfficeGraph(unittest.TestCase):
         self.assertNeighboursOf(self.og10, [78, 87, 89], 88)
         self.assertNeighboursOf(self.og10, [89, 100], 99)
 
+    def test_hot_list(self):
+        self.og5.apply_occupancy(range(20, 25))
+        hl = self.og5.hot_list()
+        self.assertEqual(sum(hl), 20)
+        self.assertEqual(sum(hl[:-5]), 20)
+        self.assertEqual(sum(hl[20:]), 0)
+
 
 if __name__ == '__main__':
     unittest.main()

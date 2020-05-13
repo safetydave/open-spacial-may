@@ -1,5 +1,6 @@
 import pandas as pd
 
+from ospacial.logger import DataLogger, DrawLogger
 from ospacial.trialrunner import TrialRunner
 
 
